@@ -32,7 +32,7 @@ x_test = vectorizer.transform(test_df['text'])
 #Split Data for Training and CV
 xs_train, xs_val, ys_train, ys_val = (train_test_split(x_train, y_train, test_size = 0.2))
 
-#Create Dimentions for Input
+#Create Dimensions for Input
 input_dim = xs_train.shape[1]
 
 #Design Nearal Network
