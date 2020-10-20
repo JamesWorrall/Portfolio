@@ -9,6 +9,7 @@ from keras.metrics import categorical_accuracy, sparse_categorical_accuracy
 from keras.activations import softmax, relu
 from keras.losses import CategoricalCrossentropy
 from keras.utils import to_categorical
+from tensorflow.keras import regularizers
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
@@ -46,20 +47,31 @@ model = Sequential()
 model.add(Conv2D(8, (5,5), padding = 'valid', input_shape = (48, 48, 1)))
 model.add(BatchNormalization(epsilon = 0.01, momentum = 0.99))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size = (1,1), strides = 1, padding = 'valid'))
-model.add(Dropout(0.4))
+model.add(MaxPooling2D(pool_size = (5,5), strides = 1, padding = 'valid'))
+model.add(Dropout(0.2))
+
 model.add(Conv2D(16, (5,5), padding = 'valid'))
 model.add(BatchNormalization(epsilon = 0.01, momentum = 0.99))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size = (1,1), strides = 2, padding = 'valid'))
-model.add(Dropout(0.5))
+model.add(MaxPooling2D(pool_size = (5,5), strides = 2, padding = 'valid'))
+model.add(Dropout(0.3))
+
+#New Addition
+model.add(Conv2D(32, (5,5), padding = 'valid'))
+model.add(Conv2D(32, (5,5), padding = 'valid'))
+model.add(Conv2D(16, (5,5), padding = 'valid'))
+
 model.add(Flatten())
+#New Addition
+model.add(Dense(1000, bias_regularizer = regularizers.l2(0.01), activation = 'relu', kernel_regularizer = regularizers.l2( l2 = 0.01)))
+model.add(Dropout(0.4))
+model.add(Dense(1000, bias_regularizer=regularizers.l2(0.01),  activation = 'relu', kernel_regularizer = regularizers.l2( l2 = 0.01)))
 model.add(Dense(7, activation = 'softmax'))
 
 model.summary()
 
 batch_size = 100
-epochs = 50
+epochs = 100
 
 #Train Model
 
