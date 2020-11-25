@@ -54,5 +54,4 @@ regressor = SVR()
 regressor.fit(X_train, y_train)
 
 #Score Model
-regressor.score(X_cv, y_cv)
-
+regressor.score(X_test, y_test)
